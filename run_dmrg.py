@@ -75,7 +75,7 @@ def write_data( psi, E, EE, Nu, Nd, Sz, model_params, path ): #cor_dipole_uu, co
     
     #
     file = open(path+"/observables.txt","a", 1)    
-    file.write(repr(t) + " " + repr(tp) + " " + repr(U) + " " + repr(J) + " " + repr(h) + " " + repr(mu) + " " + repr(E) + " " + repr(np.max(EE)) + " " + "\n")
+    file.write(repr(t) + " " + repr(tp) + " " + repr(U) + " " + repr(J) + " " + repr(h) + " " + repr(mu) + " " + repr(E) + " " + repr(np.max(EE)) + " " + repr(np.sum(Nu)) + " " + repr(np.sum(Nd)) + " " + "\n")
     file.close()
 
     '''
