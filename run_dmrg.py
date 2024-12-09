@@ -178,8 +178,8 @@ if __name__ == "__main__":
         psi.canonical_form() 
 
     chi_list = {}
-    dchi = int((chi - 50)/10)
-    for i in range(11):
+    dchi = int((chi - 50)/5)
+    for i in range(6):
         chi_list[5*i] = 50 + i*dchi
     
     dmrg_params = {
