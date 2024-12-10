@@ -122,8 +122,8 @@ if __name__ == "__main__":
     parser.add_argument("--path", default=current_directory, help="path for saving data")
     parser.add_argument("--max_sweep", default='100', help="Maximum number of sweeps")
     # action parser for the symmetries
-    parser.add_argument("--cons_N", action='store_true', help="Charge conservation")
-    parser.add_argument("--cons_Sz", action='store_true', help="Sz conservation")
+    parser.add_argument("--cons_N", default='N', help="Charge conservation")
+    parser.add_argument("--cons_Sz", default='Sz', help="Sz conservation")
     parser.add_argument("--cons_D", action='store_true', help="Dipole conservation")
     parser.add_argument("--randomize", action='store_true', help="random initial state")
     args=parser.parse_args()
@@ -141,14 +141,8 @@ if __name__ == "__main__":
     max_sweep = int(args.max_sweep)
 
     Symmetries = {}
-    if args.cons_N:
-        Symmetries['N'] = 'N'
-    else:
-        Symmetries['N'] = False
-    if args.cons_Sz:
-        Symmetries['Sz'] = 'Sz'
-    else:
-        Symmetries['Sz'] = False
+    Symmetries['N'] = args.cons_N
+    Symmetries['Sz'] = args.cons_Sz
     if args.cons_D:
         Symmetries['D'] = True
     
