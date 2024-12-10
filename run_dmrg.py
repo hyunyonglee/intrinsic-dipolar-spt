@@ -22,6 +22,7 @@ def measurements(psi, L):
     EE = psi.entanglement_entropy()
     Nu = psi.expectation_value("Nu")
     Nd = psi.expectation_value("Nd")
+    Sx = psi.expectation_value("Sx")
     Sz = psi.expectation_value("Sz")
     
     '''
@@ -38,10 +39,10 @@ def measurements(psi, L):
         cor_dipole_dd.append( np.abs( psi.expectation_value_term([('Cdd',I0+1),('Cd',I0),('Cdd',I0+2+i),('Cd',I0+3+i)]) ) )
         cor_dipole_ud.append( np.abs( psi.expectation_value_term([('Cdu',I0+1),('Cu',I0),('Cdd',I0+2+i),('Cd',I0+3+i)]) ) )
     '''
-    return EE, Nu, Nd, Sz # cor_dipole_uu, cor_dipole_dd, cor_dipole_ud
+    return EE, Nu, Nd, Sx, Sz # cor_dipole_uu, cor_dipole_dd, cor_dipole_ud
 
 
-def write_data( psi, E, EE, Nu, Nd, Sz, model_params, path ): #cor_dipole_uu, cor_dipole_dd, cor_dipole_ud, L, t, tp, U, path ):
+def write_data( psi, E, EE, Nu, Nd, Sx, Sz, model_params, path ): #cor_dipole_uu, cor_dipole_dd, cor_dipole_ud, L, t, tp, U, path ):
 
     ensure_dir(path+"/observables/")
     ensure_dir(path+"/mps/")
@@ -61,16 +62,19 @@ def write_data( psi, E, EE, Nu, Nd, Sz, model_params, path ): #cor_dipole_uu, co
     file_EE = open(path+"/observables/EE.txt","a", 1)
     file_Nus = open(path+"/observables/Nus.txt","a", 1)
     file_Nds = open(path+"/observables/Nds.txt","a", 1)
+    file_Sxs = open(path+"/observables/Sxs.txt","a", 1)
     file_Szs = open(path+"/observables/Szs.txt","a", 1)
     
     file_EE.write(repr(t) + " " + repr(tp) + " " + repr(U) + " " + repr(J) + " " + repr(h) + " " + repr(mu) + " " + "  ".join(map(str, EE)) + " " + "\n")
     file_Nus.write(repr(t) + " " + repr(tp) + " " + repr(U) + " " + repr(J) + " " + repr(h) + " " + repr(mu) + " " + "  ".join(map(str, Nu)) + " " + "\n")
     file_Nds.write(repr(t) + " " + repr(tp) + " " + repr(U) + " " + repr(J) + " " + repr(h) + " " + repr(mu) + " " + "  ".join(map(str, Nd)) + " " + "\n")
+    file_Sxs.write(repr(t) + " " + repr(tp) + " " + repr(U) + " " + repr(J) + " " + repr(h) + " " + repr(mu) + " " + "  ".join(map(str, Sx)) + " " + "\n")
     file_Szs.write(repr(t) + " " + repr(tp) + " " + repr(U) + " " + repr(J) + " " + repr(h) + " " + repr(mu) + " " + "  ".join(map(str, Sz)) + " " + "\n")
     
     file_EE.close()
     file_Nus.close()
     file_Nds.close()
+    file_Sxs.close()
     file_Szs.close()
     
     #
@@ -121,7 +125,6 @@ if __name__ == "__main__":
     parser.add_argument("--init_state", default='half-filled-spin-zero', help="Initial state")
     parser.add_argument("--path", default=current_directory, help="path for saving data")
     parser.add_argument("--max_sweep", default='100', help="Maximum number of sweeps")
-    # action parser for the symmetries
     parser.add_argument("--cons_N", default='N', help="Charge conservation")
     parser.add_argument("--cons_Sz", default='Sz', help="Sz conservation")
     parser.add_argument("--cons_D", action='store_true', help="Dipole conservation")
@@ -194,15 +197,15 @@ if __name__ == "__main__":
         'mixer_params': {
             'amplitude': 1.e-2,
             'decay': 1.5,
-            'disable_after': 20
+            'disable_after': 10
         },
         'trunc_params': {
             'chi_max': chi,
-            'svd_min': 1.e-9
+            'svd_min': 1.e-8
         },
         'chi_list': chi_list,
-        'max_E_err': 1.0e-9,
-        'max_S_err': 1.0e-9,
+        'max_E_err': 1.0e-8,
+        'max_S_err': 1.0e-8,
         'max_sweeps': max_sweep,
         'combine' : True,
         'diag_method': 'lanczos',
@@ -219,5 +222,5 @@ if __name__ == "__main__":
     E, psi = eng.run()  # equivalent to dmrg.run() up to the return parameters.
     psi.canonical_form() 
 
-    EE, Nu, Nd, Sz  = measurements(psi, L) # cor_dipole_uu, cor_dipole_dd, cor_dipole_ud = measurements(psi, L)
-    write_data( psi, E, EE, Nu, Nd, Sz, model_params, path) #cor_dipole_uu, cor_dipole_dd, cor_dipole_ud, L, t, tp, U, path )
+    EE, Nu, Nd, Sx, Sz  = measurements(psi, L) # cor_dipole_uu, cor_dipole_dd, cor_dipole_ud = measurements(psi, L)
+    write_data( psi, E, EE, Nu, Nd, Sx, Sz, model_params, path) #cor_dipole_uu, cor_dipole_dd, cor_dipole_ud, L, t, tp, U, path )
