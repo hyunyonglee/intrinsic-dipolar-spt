@@ -141,8 +141,20 @@ if __name__ == "__main__":
     max_sweep = int(args.max_sweep)
 
     Symmetries = {}
-    Symmetries['N'] = args.cons_N
-    Symmetries['Sz'] = args.cons_Sz
+    if args.cons_N=='N':
+        Symmetries['N'] = True
+    elif args.cons_N=='parity':
+        Symmetries['N'] = 'parity'
+    else:
+        Symmetries['N'] = False
+
+    if args.cons_Sz=='Sz':
+        Symmetries['Sz'] = True
+    elif args.cons_Sz=='parity':
+        Symmetries['Sz'] = 'parity'    
+    else:
+        Symmetries['Sz'] = False
+    
     if args.cons_D:
         Symmetries['D'] = True
     
