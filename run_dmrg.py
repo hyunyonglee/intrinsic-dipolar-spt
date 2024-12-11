@@ -160,6 +160,8 @@ if __name__ == "__main__":
     
     if args.cons_D:
         Symmetries['D'] = True
+    else:
+        Symmetries['D'] = False
     
     model_params = {
     "L": L, 
