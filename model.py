@@ -24,7 +24,7 @@ class Dipolar_Fermi_Hubbard_Ising( CouplingModel, MPOModel):
         mu = model_params.get('mu', 0.)
         J = model_params.get('J', 0.)
         h = model_params.get('h', 0.)
-        Symmetries = model_params.get('Symmetries', {'N': False, 'Sz': 'parity', 'D': True})
+        Symmetries = model_params.get('Symmetries', {'N': False, 'Sz': False, 'D': False})
         
         sites = [ sym_sites.SpinHalfFermionSite_DipoleSymmetry(cons_N=Symmetries['N'], cons_Sz=Symmetries['Sz'], cons_D=Symmetries['D'], x=x) for x in range(L) ]
         for x in range(L):
