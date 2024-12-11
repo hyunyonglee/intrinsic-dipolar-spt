@@ -127,8 +127,8 @@ if __name__ == "__main__":
     parser.add_argument("--max_sweep", default='100', help="Maximum number of sweeps")
     parser.add_argument("--cons_N", default='N', help="Charge conservation")
     parser.add_argument("--cons_Sz", default='Sz', help="Sz conservation")
-    parser.add_argument("--cons_D", action='store_false', help="Dipole conservation")
-    parser.add_argument("--randomize", action='store_false', help="random initial state")
+    parser.add_argument("--cons_D", action='store_true', help="Dipole conservation")
+    parser.add_argument("--randomize", action='store_true', help="random initial state")
     args=parser.parse_args()
 
     L = int(args.L)
@@ -160,8 +160,6 @@ if __name__ == "__main__":
     
     if args.cons_D:
         Symmetries['D'] = True
-    else:
-        Symmetries['D'] = False
     
     model_params = {
     "L": L, 
