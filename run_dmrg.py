@@ -145,14 +145,14 @@ if __name__ == "__main__":
 
     Symmetries = {}
     if args.cons_N=='N':
-        Symmetries['N'] = True
+        Symmetries['N'] = 'N'
     elif args.cons_N=='parity':
         Symmetries['N'] = 'parity'
     else:
         Symmetries['N'] = False
 
     if args.cons_Sz=='Sz':
-        Symmetries['Sz'] = True
+        Symmetries['Sz'] = 'Sz'
     elif args.cons_Sz=='parity':
         Symmetries['Sz'] = 'parity'    
     else:
